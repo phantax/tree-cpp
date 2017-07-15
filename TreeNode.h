@@ -33,6 +33,7 @@
 
 /* ==========================================================================
  *
+ *
  * ========================================================================== */
 
 class TreeNode {
@@ -122,6 +123,50 @@ private:
 	/* TODO: Add description */
     children_list_t children_;
 
+
+};
+
+
+
+/* ==========================================================================
+ *
+ *
+ * ========================================================================== */
+
+template<typename T>
+class BearerTreeNode : public TreeNode {
+
+private:
+
+	/* TODO: Add description */
+    T object_;
+
+
+public:
+
+
+	/* TODO: Add description */
+	BearerTreeNode(T object) : TreeNode(), object_(object) {
+    }
+
+
+	/* TODO: Add description */
+    inline T getObject() {
+
+        return object_;
+    }    
+
+	/* TODO: Add description */
+    inline const T getObject() const {
+
+        return object_;
+    }    
+
+
+	/* TODO: Add description */
+	virtual ~BearerTreeNode() {
+    }
+  
 
 };
 
