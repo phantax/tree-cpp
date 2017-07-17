@@ -71,6 +71,67 @@ public:
 
 
 	/* TODO: Add description */
+    void listNodes(std::vector<TreeNode*>& nodes) {
+
+        nodes.push_back(this);
+
+        for (children_list_t::const_iterator it = children_.begin();
+                it != children_.end(); ++it) {
+            (*it)->listNodes(nodes);
+        }
+    }
+
+
+	/* TODO: Add description */
+    int getNNodes() const {
+
+        int n = 1;
+
+        for (children_list_t::const_iterator it = children_.begin();
+                it != children_.end(); ++it) {
+            n += (*it)->getNNodes();
+        }
+
+        return n;
+    }    
+
+
+	/* TODO: Add description */
+    inline void print() const {
+
+        print("");
+    }
+
+	/* TODO: Add description */
+    void print(const std::string& prefix) const {
+
+        printMe();
+
+        int n = children_.size();
+        for (int i = 0; i < n; ++i) {
+        
+            string newPrefix = prefix;
+            if ((i + 1) < n) {
+                newPrefix += "|   ";
+                std::cout << prefix + "|---";
+            } else {
+                /* >>> this is the last child */
+                newPrefix += "    ";
+                std::cout << prefix + "+---";
+            }
+
+            children_[i]->print(newPrefix);
+        }
+    }
+
+	/* TODO: Add description */
+    virtual void printMe() const {
+
+        std::cout << "[#]" << std::endl;
+    }
+
+
+	/* TODO: Add description */
     bool addChild(TreeNode* child) {
 
         if (child == 0) {
@@ -91,22 +152,6 @@ public:
         children_.push_back(child);
 
         return true;
-    }
-
-
-	/* TODO: Add description */
-    template<typename T>
-    TreeNode* newChild() {
-
-        TreeNode* child = static_cast<TreeNode*>(new T());
-
-        if (!addChild(child)) {
-            /* for some reason we failed to create a new child */
-            delete child;
-            return 0;
-        }
-
-        return child;
     }
 
 
