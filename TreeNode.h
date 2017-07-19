@@ -97,15 +97,33 @@ public:
 
 
 	/* TODO: Add description */
+    int getDepth() const {
+
+        int depth = 0;
+
+        for (children_list_t::const_iterator it = children_.begin();
+                it != children_.end(); ++it) {
+            
+            int subDepth = (*it)->getDepth();
+            if (subDepth > depth) {
+                depth = subDepth;
+            }
+        }
+
+        return depth + 1;
+    }    
+
+
+	/* TODO: Add description */
     inline void print() const {
 
-        print("");
+        print("", 0);
     }
 
 	/* TODO: Add description */
-    void print(const std::string& prefix) const {
+    void print(const std::string& prefix, size_t col) const {
 
-        printMe();
+        printMe(col);
 
         int n = children_.size();
         for (int i = 0; i < n; ++i) {
@@ -120,12 +138,12 @@ public:
                 std::cout << prefix + "+---";
             }
 
-            children_[i]->print(newPrefix);
+            children_[i]->print(newPrefix, col + 4);
         }
     }
 
 	/* TODO: Add description */
-    virtual void printMe() const {
+    virtual void printMe(size_t col) const {
 
         std::cout << "[#]" << std::endl;
     }
@@ -171,48 +189,5 @@ private:
 
 };
 
-
-
-/* ==========================================================================
- *
- *
- * ========================================================================== */
-
-template<typename T>
-class BearerTreeNode : public TreeNode {
-
-private:
-
-	/* TODO: Add description */
-    T object_;
-
-
-public:
-
-
-	/* TODO: Add description */
-	BearerTreeNode(T object) : TreeNode(), object_(object) {
-    }
-
-
-	/* TODO: Add description */
-    inline T getObject() {
-
-        return object_;
-    }    
-
-	/* TODO: Add description */
-    inline const T getObject() const {
-
-        return object_;
-    }    
-
-
-	/* TODO: Add description */
-	virtual ~BearerTreeNode() {
-    }
-  
-
-};
 
 #endif
