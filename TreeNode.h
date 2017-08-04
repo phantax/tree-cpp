@@ -29,6 +29,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <vector>
+#include <iostream>
+
 
 
 /* ==========================================================================
@@ -143,7 +145,7 @@ public:
         int n = children_.size();
         for (int i = 0; i < n; ++i) {
         
-            string newPrefix = prefix;
+            std::string newPrefix = prefix;
             if ((i + 1) < n) {
                 newPrefix += "|   ";
                 std::cout << prefix + "|---";
