@@ -64,6 +64,21 @@ public:
 
 
 	/* TODO: Add description */
+    TreeNode* getRoot() {
+    
+        TreeNode* root = this;
+        TreeNode* parent = parent_;
+
+        while (parent != 0) {
+            root = parent;
+            parent = parent->getParent();
+        }
+
+        return root;
+    }    
+
+
+	/* TODO: Add description */
     inline const children_list_t& getChildren() const {
 
         return children_;
