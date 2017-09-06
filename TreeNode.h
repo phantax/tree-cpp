@@ -114,33 +114,56 @@ public:
 
 
 	/* TODO: Add description */
-    int getDepth() const {
+    size_t getDepth() const {
 
-        int depth = 0;
+        size_t depth = 0;
 
         for (children_list_t::const_iterator it = children_.begin();
                 it != children_.end(); ++it) {
             
-            int subDepth = (*it)->getDepth();
+            size_t subDepth = (*it)->getDepth();
             if (subDepth > depth) {
                 depth = subDepth;
             }
         }
 
-        return depth + 1;
+        return depth;
+    }    
+
+
+	/* TODO: Add description */
+    size_t getLevel() const {
+
+        size_t level = 0;
+
+        const TreeNode* node = this->getParent();
+        while (node != 0) {
+            level++;
+            node = node->getParent();
+        }
+
+        /* Don't count root */
+        return level;
     }    
 
 
 	/* TODO: Add description */
     inline void print() const {
 
-        print("", 0);
+        print("", 0, std::cout);
     }
 
 	/* TODO: Add description */
-    void print(const std::string& prefix, size_t col) const {
+    inline void print(std::ostream& stream) const {
 
-        printMe(col);
+        print("", 0, stream);
+    }
+
+	/* TODO: Add description */
+    void print(const std::string& prefix,
+            size_t col, std::ostream& stream) const {
+
+        printMe(col, stream);
 
         int n = children_.size();
         for (int i = 0; i < n; ++i) {
@@ -148,21 +171,21 @@ public:
             std::string newPrefix = prefix;
             if ((i + 1) < n) {
                 newPrefix += "|   ";
-                std::cout << prefix + "|---";
+                stream << prefix + "|---";
             } else {
                 /* >>> this is the last child */
                 newPrefix += "    ";
-                std::cout << prefix + "+---";
+                stream << prefix + "+---";
             }
 
-            children_[i]->print(newPrefix, col + 4);
+            children_[i]->print(newPrefix, col + 4, stream);
         }
     }
 
 	/* TODO: Add description */
-    virtual void printMe(size_t col) const {
+    virtual void printMe(size_t col, std::ostream& stream) const {
 
-        std::cout << "[#]" << std::endl;
+        stream << "[#]" << std::endl;
     }
 
 
